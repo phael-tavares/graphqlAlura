@@ -35,8 +35,6 @@ class MatriculasAPI extends SQLDataSource {
           return this.db.select('*').from('matriculas')
       }
 
-      matriculasLoader = new DataLoader(this.getMatriculasPorEstudante.bind(this))
-
     getMatriculasPorEstudante = new DataLoader(async idsEstudantes =>{
           const matriculas = await this.db
           .select('*')

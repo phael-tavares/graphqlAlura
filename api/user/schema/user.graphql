@@ -32,7 +32,7 @@ enum RolesType{
 }
 
 type Query {
-    users: [User]
+    users(page: Int, limit: Int): [User]
     user(id: ID!): User!
 }
 

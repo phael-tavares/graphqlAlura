@@ -8,10 +8,17 @@ class TurmasAPI extends SQLDataSource {
           }
         }
       
-        async getTurmas() {
+        async getTurmas( { page = 0, pageOffset = Infinity } ) {
+          
+          const registroInicial = page === 0 || page === 1
+          ? 0
+          : (page * pageOffset) - 2
+
           return this.db 
             .select('*')
             .from('turmas')
+            .offset(registroInicial)
+            .limit(pageOffset)
         }
       
         async getTurma(id) {
