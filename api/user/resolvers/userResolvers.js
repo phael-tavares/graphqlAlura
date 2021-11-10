@@ -27,7 +27,7 @@ RolesType: {
     },
 
     User: {
-        matriculas: (parent, _, { dataSources }) => dataSources.matriculasAPI.getMatriculasPorEstudante(parent.id)
+        matriculas: (parent, _, { dataSources }) => dataSources.matriculasAPI.getMatriculasPorEstudante.load(parent.id)
     }
 }
 
