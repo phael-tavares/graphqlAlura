@@ -1,4 +1,5 @@
 const { SQLDataSource } = require('datasource-sql');
+const { Matricula } = require('../resolvers/matriculaResolvers');
 
 class MatriculasAPI extends SQLDataSource {
     constructor(dbConfig) {
@@ -20,6 +21,48 @@ class MatriculasAPI extends SQLDataSource {
     return this.Resposta
     
     }
+
+    async getMatriculasPorTurma(idTurma){
+        const matriculas = await this.db
+          .select('*')
+          .from('matriculas')
+          .where({turma_id: idTurma})
+
+          console.log(matriculas);
+          return matriculas;
+      }
+
+      async getMatriculas(){
+          return this.db.select('*').from('matriculas')
+      }
+
+      async getMatriculasPorEstudante(idEstudante){
+          const matriculas = await this.db
+          .select('*')
+          .from('matriculas')
+          .where({estudante_id: idEstudante})
+
+          return matriculas;
+      }
+
+      async deletarMatricula(idMatricula){
+        await this.db('matriculas')
+        .where({ id: Number(idMatricula) })
+        .del()
+  
+      this.Resposta.mensagem = "registro deletado"
+      return this.Resposta
+      }
+
+      async cancelarMatricula(idMatricula){
+          await this.db
+          .update({status: "cancelado"})
+          .where({id: Number(idMatricula)})
+          .into('matriculas')
+
+          this.Resposta.mensagem = "matricula cancelada"
+          return this.Resposta
+      }
 }
 
 module.exports = MatriculasAPI
